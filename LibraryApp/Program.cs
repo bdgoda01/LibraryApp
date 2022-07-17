@@ -30,28 +30,17 @@
                     }
                 );
 
-            //intro, ask user for name of book, display book information
+            //intro
             Console.WriteLine("Welcome to Big Bean's Library!");
             Console.WriteLine("These are our currently available books:\n");
 
-            //temporary, get array of all book names
-            List<string> allBookNames = libraryBooks.GetBookNames();
-            foreach (string bookName in allBookNames)
-            {
-                Console.WriteLine(bookName);
-            }
+            //displays all books
+            libraryBooks.GetBookTitles();
 
+            //asks user for book number, displays book info
             Console.WriteLine("\nWhich book would you like to know more about?");
-            string bookSelection = Console.ReadLine();
-            bool bookExists = allBookNames.Exists(bookName => bookName == bookSelection);
-            if (bookExists)
-            {
-                libraryBooks.Lookup(bookSelection);
-            }
-            else
-            {
-                Console.WriteLine("Invalid Selection. Goodbye.");
-            }
+            Console.Write("Please enter the number of the book you are interested in: ");
+            libraryBooks.Lookup(Console.ReadLine());
 
         }
     }

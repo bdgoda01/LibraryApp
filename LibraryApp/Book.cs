@@ -23,7 +23,7 @@ namespace LibraryApp
 
         public string DisplayInfo()
         {
-            string genres = string.Join(",", Genre);
+            string genres = string.Join(", ", Genre);
             
             return $"{Title} by {Author}\nRelease Year: {ReleaseYear}\nGenre(s): {genres}";
         }

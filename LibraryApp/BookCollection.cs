@@ -8,32 +8,55 @@ namespace LibraryApp
 {
     internal class BookCollection
     {
+        //holds collection of all books in the library
         private readonly Dictionary<int, Book> _bookCollection = new Dictionary<int, Book>();
-        private readonly List<string> _bookNames = new List<string>();
+        
+        //list of Titles of all books in the library
+        private readonly List<string> _bookTitles = new List<string>();
 
+        //constructor: sets the _bookCollection dictionary
         public BookCollection(Dictionary<int, Book> bookCollection)
         {
             _bookCollection = bookCollection;
         }
 
-        public List<string> GetBookNames()
+        //displays each book number & title of all books in the library and adds titles to _bookTitles list
+        public void GetBookTitles()
         {
-            foreach(Book book in _bookCollection.Values)
+            foreach(KeyValuePair<int, Book> record in _bookCollection)
             {
-                _bookNames.Add(book.Title);
-            }
+                
+                int bookNumber = record.Key;
+                Book book = record.Value;
 
-            return _bookNames;
+                //maybe refactor to a DisplayBookTitles() method
+                Console.Write("{0}: ", bookNumber);
+                Console.WriteLine(book.Title);
+
+                _bookTitles.Add(book.Title);
+            }
         }
 
-        public void Lookup(string bookName)
+        //looks up and displays a book's info based on user input
+        public void Lookup(string bookNumber)
         {
-            foreach(Book book in _bookCollection.Values)
+            if(!String.IsNullOrEmpty(bookNumber) && Int32.TryParse(bookNumber, out int bookKey))
             {
-                if(book.Title == bookName)
+                if(_bookCollection.TryGetValue(bookKey, out Book book))
                 {
+                    Console.WriteLine();
                     Console.WriteLine(book.DisplayInfo());
+                    Console.WriteLine();
+                    Console.WriteLine("Thanks for visiting. Goodbye!");
                 }
+                else
+                {
+                    Console.WriteLine("\nThat number is not assigned to any book. Goodbye.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nInvalid Input. Goodbye.");
             }
         }
 
