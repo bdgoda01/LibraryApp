@@ -8,10 +8,10 @@ namespace LibraryApp
 {
     class Book
     {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public int ReleaseYear { get; set; }
-        public List<string> Genre { get; set; }
+        public string Title { get; private set; }
+        public string Author { get; private set; }
+        public int ReleaseYear { get; private set; }
+        public List<string> Genre { get; private set; }
 
         public Book(string title, string author, int releaseYear, List<string> genre)
         {

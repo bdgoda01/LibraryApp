@@ -9,10 +9,10 @@ namespace LibraryApp
     internal class BookCollection
     {
         //holds collection of all books in the library
-        private readonly Dictionary<int, Book> _bookCollection = new Dictionary<int, Book>();
+        private readonly Dictionary<int, Book> _bookCollection = new();
         
         //list of Titles of all books in the library
-        private readonly List<string> _bookTitles = new List<string>();
+        private List<string> _bookTitles = new();
 
         //constructor: sets the _bookCollection dictionary
         public BookCollection(Dictionary<int, Book> bookCollection)
@@ -23,7 +23,7 @@ namespace LibraryApp
         //displays each book number & title of all books in the library and adds titles to _bookTitles list
         public void GetBookTitles()
         {
-            foreach(KeyValuePair<int, Book> record in _bookCollection)
+            foreach (KeyValuePair<int, Book> record in _bookCollection)
             {
                 
                 int bookNumber = record.Key;
@@ -40,9 +40,9 @@ namespace LibraryApp
         //looks up and displays a book's info based on user input
         public void Lookup(string bookNumber)
         {
-            if(!String.IsNullOrEmpty(bookNumber) && Int32.TryParse(bookNumber, out int bookKey))
+            if (!String.IsNullOrEmpty(bookNumber) && Int32.TryParse(bookNumber, out int bookKey))
             {
-                if(_bookCollection.TryGetValue(bookKey, out Book book))
+                if (_bookCollection.TryGetValue(bookKey, out Book book))
                 {
                     Console.WriteLine();
                     Console.WriteLine(book.DisplayInfo());
