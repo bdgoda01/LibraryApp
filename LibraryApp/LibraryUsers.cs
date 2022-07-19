@@ -19,9 +19,21 @@ namespace LibraryApp
             _libraryUsers = libraryUsers;
         }
 
-        public void GetUserNames()
+        public User UserExistsCheck(string username)
         {
-            
+            //Check if a user exists in the current database
+            if(_libraryUsers.TryGetValue(username, out User currentUser))
+            {
+                Console.WriteLine("\nWelcome, {0} {1}! Logging you in...", currentUser.FirstName, currentUser.LastName);
+                Constants.MediumPause();
+                Console.WriteLine("Successfully logged in.");
+                return currentUser;
+            }
+            else
+            {
+                User newUser = new User(username);
+                return newUser;
+            }
         }
     }
 }

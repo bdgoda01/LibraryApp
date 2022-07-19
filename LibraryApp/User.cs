@@ -24,7 +24,6 @@ namespace LibraryApp
         public User(string userName)
         {
             UserName = userName;
-
             //method to set up new users
             NewUserSetUp();
         }
@@ -87,14 +86,15 @@ namespace LibraryApp
                 if (!String.IsNullOrEmpty(_userInput))
                 {
                     Console.WriteLine("\nPlease enter your information again...");
-                    Constants.MediumPause();
+                    Constants.ShortPause();
                     continue;
                 }
                 break;
                 
             }
            
-
+            //idea: user should also be able to check out/return books, have a record of all books currently checked out (with a due date)
+            //maybe separate class called UserAccount ??
 
         }
     }

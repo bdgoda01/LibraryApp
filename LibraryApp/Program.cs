@@ -1,4 +1,9 @@
-﻿namespace LibraryApp
+﻿//need to:
+//need to add ability to check out books for users
+//need to add way to keep track of books checked out by certain users 
+//need to add an Available, a Loanee, and a ReturnDate property to Book object
+
+namespace LibraryApp
 {
     internal class Program
     {
@@ -31,19 +36,34 @@
                     }
                 );
 
-            //temporary, create empty user
+            //temporary, create user
+            User user1 = new User("libraryAdmin", "Library", "Admin");
+            User user2 = new User("beanieBaby", "Beanie", "Baby");
+
+            //temporary, create LibraryUsers dictionary
+            LibraryUsers allUsers = new LibraryUsers
+                (
+                    new Dictionary<string, User>
+                    {
+                        { user1.UserName, user1 },
+                        { user2.UserName, user2 }
+                    }
+                );
+
+            //temporary, create empty user for current user
             User currentUser;
 
-            //temporary, create empty LibraryUsers
-
             //const for sleep length
-            const int pause = 3000;
+            //const int pause = 3000;
 
             //program master loop
-            while (true)
+            while (Constants.runProgram)
             {
-                //intro
+                Constants.runMenu = true;
+                currentUser = null;
                 Console.Clear();
+                
+                //intro
                 Console.WriteLine("Welcome to Big Bean's Library!\n");
 
                 //gather user information, eventually separate class, eventually possibly add dictionary of all users?? or at least, a list
@@ -59,7 +79,9 @@
                     //maybe also add a length requirement and prohibit special characters
                     if (!(String.IsNullOrEmpty(userInput) || Int32.TryParse(userInput, out _)))
                     {
-                        currentUser = new User(userInput);
+                        //check if user exists in current database and assigns the user to currentUser
+                        //if it is a new user, create the new user and assigns that user to currentUser
+                        currentUser = allUsers.UserExistsCheck(userInput);
                         break;
 
                     }
@@ -81,6 +103,15 @@
                     }
                 }
 
+                //start menu
+                while (Constants.runMenu)
+                {
+                    Menu.Start(currentUser);
+                }
+                
+                continue;
+
+/*
                 //temporary process, will be changed to show menu of options first, then will display genres, then available books, then after viewing book info, user will choose an option from another menu
                 Console.Clear();
                 Console.WriteLine("These are our currently available books:\n");
@@ -104,6 +135,7 @@
                 Console.WriteLine("Logged out successfully. Please visit our library again.");
 
                 break;
+*/
             }
         }
     }
