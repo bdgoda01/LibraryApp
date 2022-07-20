@@ -54,7 +54,7 @@ namespace LibraryApp
                     }
 
                     FirstName = _userInput;
-                    Constants.ShortPause();
+                    LibraryStatic.ShortPause();
 
                     while (true)
                     {
@@ -71,7 +71,7 @@ namespace LibraryApp
                         }
 
                         LastName = _userInput;
-                        Constants.ShortPause();
+                        LibraryStatic.ShortPause();
                         break;
                     }
                     break;
@@ -86,7 +86,7 @@ namespace LibraryApp
                 if (!String.IsNullOrEmpty(_userInput))
                 {
                     Console.WriteLine("\nPlease enter your information again...");
-                    Constants.ShortPause();
+                    LibraryStatic.ShortPause();
                     continue;
                 }
                 break;

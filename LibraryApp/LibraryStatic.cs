@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace LibraryApp
 {
-    static class Constants
+    static class LibraryStatic
     {
         public static bool runProgram = true;
         public static bool runMenu = true;
+        public static int programLevel = 1;
 
         private static int _shortPauseLength = 1500;
         private static int _mediumPauseLength = 3000;

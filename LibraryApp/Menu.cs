@@ -8,30 +8,94 @@ using System.Threading.Tasks;
 //need to add more Main Menu options
 namespace LibraryApp
 {
-    static class Menu
+    public class Menu
     {
-        private static string _userInput;
-        private static User _currentUser;
-        private static Dictionary<string, string> _libraryMainMenu = new Dictionary<string, string>
+        private string _userInput;
+        private User _currentUser;
+        private BookCollection _libraryBooks;
+
+        private Dictionary<string, string> _libraryMainMenu = new Dictionary<string, string>
         {
-            {"0", "Log Out" },
-            {"1", "Browse Collection"}
+            {"1", "Browse Collection"},
+            {"0", "Log Out" }
         };
-        private static Dictionary<string, string> _postLogOutMenu = new Dictionary<string, string>
+        private Dictionary<string, string> _postLogOutMenu = new Dictionary<string, string>
         {
-            {"0", "Exit Application" },
-            {"1", "Log In" }
+            {"1", "Log In" },
+            {"0", "Exit Application" }
         };
 
-        public static void Start(User currentUser)
+        public Menu(User currentUser, BookCollection libraryBooks)
         {
             _currentUser = currentUser;
-            Console.WriteLine();
-            DisplayMenu(_libraryMainMenu);
-            MenuSelection();
+            _libraryBooks = libraryBooks;
         }
 
-        private static void DisplayMenu(Dictionary<string, string> menu)
+        public bool LibraryMenu()
+        {
+            int libraryMenuLevel = 2;
+            LibraryStatic.programLevel += 1;
+            
+            while (true)
+            {
+                DisplayMenu(_libraryMainMenu);
+                _userInput = Console.ReadLine();
+                
+                if (CheckMenuSelection(_userInput, _libraryMainMenu))
+                {
+                    bool continueProgramLoop = MainMenu(_userInput);
+                    //valid menu selection
+                    //cycle through main menu options
+                    if (!continueProgramLoop && LibraryStatic.programLevel == libraryMenuLevel)
+                    {
+                        continue;
+                    }
+                    else if (continueProgramLoop)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                
+                continue; 
+            }
+
+            //figure out structure again lmao
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+            //
+
+            //User Input
+            //if( input == 1)
+            ////while loop{
+            //////display all books
+            //////enter 0 to go back to main menu
+            //////user input for book they are interested in, or 0 to go back to main menu & break;
+            //////display book info
+            //////display book menu (check out book, return book, go back to all book display)
+            ////////if(check out book) >> CheckOut; continue;
+            ////////if(return) >> Return; continue;
+            ////////if(go back) >> continue;
+            ////}
+            //if( input == 0)
+            ////Log out; Display post-log out menu
+            ////if( input == 1 ) 
+            //////break;
+            ////if( input == 0 )
+            /////Environment.Exit(0)
+        }
+
+        private void DisplayMenu(Dictionary<string, string> menu)
         {
             Console.WriteLine("\nWould you like to: \n");
             foreach(KeyValuePair<string, string> menuItem in menu)
@@ -43,7 +107,37 @@ namespace LibraryApp
             }
         }
 
-        private static void MenuSelection()
+        private bool MainMenu(string userMenuSelection)
+        {
+            //don't need a loop, this is just to do if menu selection == #, then do a certain task
+            //function stuff
+            //set LibraryStatic.programLevel = level to return to
+            //if LogOut() is true, return true; if false return false
+            return true;
+            
+        }
+
+        private bool CheckMenuSelection(string userInput, Dictionary<string, string> menu)
+        {
+            if(!string.IsNullOrEmpty(userInput) && menu.TryGetValue(userInput, out _))
+            {
+                return true;
+            } 
+            else if (!string.IsNullOrEmpty(userInput) && !menu.TryGetValue(userInput, out _))
+            {
+                //Invalid Menu Option
+                return false;
+            }
+            else
+            {
+                //Enter a Menu Option
+                return false;
+            }
+            
+        }
+
+        /*
+        private void MenuSelection()
         {
             while (true)
             {
@@ -84,17 +178,21 @@ namespace LibraryApp
             }
             
         }
+        */
 
-        private static void LogOut()
+        private bool LogOut()
         {
+            //returns true to log out and restart and false to log out and exit
+            //also should to set LibraryStatic.programLevel to 1 to loop master or 0 to exit
             //log out and determine if user wants to exit app or restart
-            Console.WriteLine("\n\nThank you for visiting Big Bean's Library, {0}!", _currentUser.FirstName);
+            Console.Clear();
+            Console.WriteLine("Thank you for visiting Big Bean's Library, {0}!", _currentUser.FirstName);
             Console.WriteLine("\nLogging you out, {0}...", _currentUser.UserName);
-            Constants.MediumPause();
+            LibraryStatic.MediumPause();
             Console.WriteLine("...");
-            Constants.ShortPause();
+            LibraryStatic.ShortPause();
             Console.WriteLine("Logged out successfully.");
-            
+
             DisplayMenu(_postLogOutMenu);
 
             while (true)
@@ -108,21 +206,21 @@ namespace LibraryApp
                     {
                         //exit application
                         Console.WriteLine("Exiting Application. Goodbye!");
-                        Constants.ShortPause();
-                        Constants.runProgram = false;
+                        LibraryStatic.ShortPause();
+                        LibraryStatic.runProgram = false;
                         break;
                     }
                     else if (_userInput == "1")
                     {
                         //log in again
                         Console.WriteLine("Taking you back to Log In screen...");
-                        Constants.ShortPause();
+                        LibraryStatic.ShortPause();
                         break;
                     }
                     else
                     {
                         Console.WriteLine("Please provide a valid Menu Number...");
-                        Constants.ShortPause();
+                        LibraryStatic.ShortPause();
                         Console.WriteLine();
 
                         continue;
@@ -131,12 +229,13 @@ namespace LibraryApp
                 else if (string.IsNullOrEmpty(_userInput))
                 {
                     Console.WriteLine("Please provide a Menu Number...");
-                    Constants.ShortPause();
+                    LibraryStatic.ShortPause();
                     Console.WriteLine();
 
                     continue;
                 }
             }
+            return true;
         }
 
     }

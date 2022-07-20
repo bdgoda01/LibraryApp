@@ -25,7 +25,7 @@ namespace LibraryApp
             if(_libraryUsers.TryGetValue(username, out User currentUser))
             {
                 Console.WriteLine("\nWelcome, {0} {1}! Logging you in...", currentUser.FirstName, currentUser.LastName);
-                Constants.MediumPause();
+                LibraryStatic.MediumPause();
                 Console.WriteLine("Successfully logged in.");
                 return currentUser;
             }

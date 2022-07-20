@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryApp
 {
-    internal class BookCollection
+    public class BookCollection
     {
         //holds collection of all books in the library
         private readonly Dictionary<int, Book> _bookCollection = new();
@@ -51,7 +51,7 @@ namespace LibraryApp
                 }
                 else
                 {
-                    Console.WriteLine("\nThat number is not assigned to any book. Goodbye.");
+                    Console.WriteLine("\nThat number is not assigned to a book. Goodbye.");
                 }
             }
             else
