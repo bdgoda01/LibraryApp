@@ -17,12 +17,32 @@ namespace LibraryApp
         private Dictionary<string, string> _libraryMainMenu = new Dictionary<string, string>
         {
             {"1", "Browse Collection"},
-            {"0", "Log Out" }
+            {"2", "Log Out" }
         };
+
         private Dictionary<string, string> _postLogOutMenu = new Dictionary<string, string>
         {
             {"1", "Log In" },
-            {"0", "Exit Application" }
+            {"2", "Exit Application" }
+        };
+
+        private Dictionary<string, string> _browseCollectionMenu = new Dictionary<string, string>
+        {
+            {"1", "Select a Book" },
+            {"2", "Return to Main Menu" }
+        };
+
+        private Dictionary<string, string> _bookInfoMenu = new Dictionary<string, string>
+        {
+            {"1", "Check Out Book" },
+            {"2", "Return to Book List" },
+            {"3", "Return to Main Menu" }
+        };
+
+        private Dictionary<string, string> _postCheckOutMenu = new Dictionary<string, string>
+        {
+            {"1", "Return to Book List" },
+            {"2", "Return to Main Menu" }
         };
 
         public Menu(User currentUser, BookCollection libraryBooks)
@@ -33,71 +53,43 @@ namespace LibraryApp
 
         public bool LibraryMenu()
         {
-            int libraryMenuLevel = 2;
-            LibraryStatic.programLevel += 1;
-            
             while (true)
             {
+                Console.Clear();
                 DisplayMenu(_libraryMainMenu);
                 _userInput = Console.ReadLine();
                 
                 if (CheckMenuSelection(_userInput, _libraryMainMenu))
                 {
-                    bool continueProgramLoop = MainMenu(_userInput);
-                    //valid menu selection
-                    //cycle through main menu options
-                    if (!continueProgramLoop && LibraryStatic.programLevel == libraryMenuLevel)
-                    {
+                   bool continueMainMenuLoop = MainMenu(_userInput);
+                   if (continueMainMenuLoop)
+                   {
                         continue;
-                    }
-                    else if (continueProgramLoop)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                   }
                 }
-                
-                continue; 
+                else
+                {
+                    continue;
+                }
+
+                if (LogOut())
+                {
+                    //log out and restart
+                    return true;
+                }
+                else
+                {
+                    //log out and exit application
+                    return false;
+                }
+
             }
 
-            //figure out structure again lmao
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-
-            //User Input
-            //if( input == 1)
-            ////while loop{
-            //////display all books
-            //////enter 0 to go back to main menu
-            //////user input for book they are interested in, or 0 to go back to main menu & break;
-            //////display book info
-            //////display book menu (check out book, return book, go back to all book display)
-            ////////if(check out book) >> CheckOut; continue;
-            ////////if(return) >> Return; continue;
-            ////////if(go back) >> continue;
-            ////}
-            //if( input == 0)
-            ////Log out; Display post-log out menu
-            ////if( input == 1 ) 
-            //////break;
-            ////if( input == 0 )
-            /////Environment.Exit(0)
         }
 
         private void DisplayMenu(Dictionary<string, string> menu)
         {
-            Console.WriteLine("\nWould you like to: \n");
+            Console.WriteLine("Would you like to: \n");
             foreach(KeyValuePair<string, string> menuItem in menu)
             {
                 string menuNumber = menuItem.Key;
@@ -105,85 +97,193 @@ namespace LibraryApp
 
                 Console.WriteLine("{0}: {1}", menuNumber, menuName);
             }
+            Console.WriteLine();
         }
 
         private bool MainMenu(string userMenuSelection)
         {
-            //don't need a loop, this is just to do if menu selection == #, then do a certain task
-            //function stuff
-            //set LibraryStatic.programLevel = level to return to
-            //if LogOut() is true, return true; if false return false
+            //returns true to restart Main Menu loop
+            //returns false to start Log Out process
+
+            if(userMenuSelection == "1")
+            {
+                BrowseCollection();
+                return true;
+            }
+            else if (userMenuSelection == "2")
+            {
+                return false;
+            }
+
             return true;
             
         }
 
         private bool CheckMenuSelection(string userInput, Dictionary<string, string> menu)
         {
+            //returns true if user input is a valid menu selection
+
             if(!string.IsNullOrEmpty(userInput) && menu.TryGetValue(userInput, out _))
             {
                 return true;
             } 
             else if (!string.IsNullOrEmpty(userInput) && !menu.TryGetValue(userInput, out _))
             {
-                //Invalid Menu Option
+                Console.WriteLine("\nInvalid menu selection.");
+                Console.Write("Press enter to try again...");
+                Console.ReadLine();
                 return false;
             }
             else
             {
-                //Enter a Menu Option
+                Console.WriteLine("\nA menu option must be entered to proceed.");
+                Console.Write("Press enter to try again...");
+                Console.ReadLine();
                 return false;
             }
             
         }
 
-        /*
-        private void MenuSelection()
+        private void BrowseCollection()
         {
             while (true)
             {
-                Console.Write("\nEnter Menu Number: ");
+                DisplayLibraryCollection();
+                Console.WriteLine();
+                DisplayMenu(_browseCollectionMenu);
                 _userInput = Console.ReadLine();
 
-                if (!string.IsNullOrEmpty(_userInput) && Int32.TryParse(_userInput, out _ ))
+                if (CheckMenuSelection(_userInput, _browseCollectionMenu))
                 {
-                    if(_userInput == "0")
+                    if(_userInput == "1")
                     {
-                        LogOut();
-                        Constants.runMenu = false;
-                        break;
-                    }
-                    else if(_userInput == "1")
-                    {
-                        //browse collection
-                        Console.WriteLine("Under Construction...");
-                        Constants.ShortPause();
-                        break;
+                        bool continueBrowseLoop = LookupBook();
+                        if (continueBrowseLoop)
+                        {
+                            //Displays all books again
+                            continue;
+                        }
+                        else
+                        {
+                            //returns to Main Menu
+                            break;
+                        }
+
                     }
                     else
                     {
-                        Console.WriteLine("Please provide a valid Menu Number...");
-                        Constants.ShortPause();
-                        Console.WriteLine();
-                        continue;
+                        //returns to Main Menu
+                        break;
                     }
                 }
-                else if (string.IsNullOrEmpty(_userInput))
+                else
                 {
-                    Console.WriteLine("Please provide a Menu Number...");
-                    Constants.ShortPause();
-                    Console.WriteLine();
-
+                    //Displays all books again
                     continue;
                 }
             }
-            
+           
         }
-        */
 
+        private void DisplayLibraryCollection()
+        {
+            Console.Clear();
+            _libraryBooks.DisplayAllBooks();
+            Console.WriteLine();
+        }
+
+        private bool LookupBook()
+        {
+            while (true)
+            {
+                Console.Write("\nPlease enter a book number: ");
+                _userInput = Console.ReadLine();
+                Book bookSelection = _libraryBooks.Lookup(_userInput);
+                if (bookSelection is not null)
+                {
+                    //DisplayBookInfo returns false to return to main menu or returns true to display books again
+                    bool continueBrowseLoop = DisplayBookInfo(bookSelection);
+                    return continueBrowseLoop;
+                }
+                else
+                {
+                    DisplayLibraryCollection();
+                    continue;
+                }
+            }
+        }
+
+        private bool DisplayBookInfo(Book userBookSelection)
+        {
+            //return true to display all books again
+            //return false to return to main menu
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine(userBookSelection.DisplayInfo());
+                Console.WriteLine();
+
+                DisplayMenu(_bookInfoMenu);
+                _userInput = Console.ReadLine();
+
+                if (CheckMenuSelection(_userInput, _bookInfoMenu))
+                {
+                    if(_userInput == "1")
+                    {
+                        bool continueBrowseLoop = CheckOut(userBookSelection);
+                        return continueBrowseLoop;
+                    }
+                    else if (_userInput == "2")
+                    {
+                        return true;
+                    }
+                    else if (_userInput == "3")
+                    {
+                        return false;
+                    }
+
+                    continue;
+                    //should not reach this continue
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+        }
+
+        private bool CheckOut(Book userBookSelection)
+        {
+            userBookSelection.CheckOutBook(_currentUser.FullName);
+
+            while (true)
+            {
+                DisplayMenu(_postCheckOutMenu);
+                _userInput = Console.ReadLine();
+
+                if (CheckMenuSelection(_userInput, _postCheckOutMenu))
+                {
+                    if(_userInput == "1")
+                    {
+                        //returns true to display all books again
+                        return true;
+                    }
+                    else
+                    {
+                        //returns false to return to menu
+                        return false;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+        }
         private bool LogOut()
         {
-            //returns true to log out and restart and false to log out and exit
-            //also should to set LibraryStatic.programLevel to 1 to loop master or 0 to exit
             //log out and determine if user wants to exit app or restart
             Console.Clear();
             Console.WriteLine("Thank you for visiting Big Bean's Library, {0}!", _currentUser.FirstName);
@@ -192,51 +292,33 @@ namespace LibraryApp
             Console.WriteLine("...");
             LibraryStatic.ShortPause();
             Console.WriteLine("Logged out successfully.");
-
-            DisplayMenu(_postLogOutMenu);
+            Console.Write("Press Enter to continue: ");
+            Console.ReadLine();
 
             while (true)
             {
-                Console.Write("\nEnter Menu Number: ");
+                Console.Clear();
+                DisplayMenu(_postLogOutMenu);
                 _userInput = Console.ReadLine();
-
-                if (!string.IsNullOrEmpty(_userInput) && Int32.TryParse(_userInput, out _))
+                if (CheckMenuSelection(_userInput, _postLogOutMenu))
                 {
-                    if (_userInput == "0")
+                    if(_userInput == "1")
                     {
-                        //exit application
-                        Console.WriteLine("Exiting Application. Goodbye!");
-                        LibraryStatic.ShortPause();
-                        LibraryStatic.runProgram = false;
-                        break;
-                    }
-                    else if (_userInput == "1")
-                    {
-                        //log in again
-                        Console.WriteLine("Taking you back to Log In screen...");
-                        LibraryStatic.ShortPause();
-                        break;
+                        //returns true to restart application (log in again)
+                        return true;
                     }
                     else
                     {
-                        Console.WriteLine("Please provide a valid Menu Number...");
-                        LibraryStatic.ShortPause();
-                        Console.WriteLine();
-
-                        continue;
+                        //returns false to exit application
+                        return false;
                     }
                 }
-                else if (string.IsNullOrEmpty(_userInput))
+                else
                 {
-                    Console.WriteLine("Please provide a Menu Number...");
-                    LibraryStatic.ShortPause();
-                    Console.WriteLine();
-
                     continue;
                 }
             }
-            return true;
-        }
 
+        }
     }
 }

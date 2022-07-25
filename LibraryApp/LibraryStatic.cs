@@ -8,10 +8,6 @@ namespace LibraryApp
 {
     static class LibraryStatic
     {
-        public static bool runProgram = true;
-        public static bool runMenu = true;
-        public static int programLevel = 1;
-
         private static int _shortPauseLength = 1500;
         private static int _mediumPauseLength = 3000;
         private static int _longPauseLength = 5000;

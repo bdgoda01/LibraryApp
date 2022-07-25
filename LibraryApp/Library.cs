@@ -15,6 +15,19 @@ namespace LibraryApp
         
         public Library()
         {
+            //FINISH THIS!!!!!
+            //
+            //
+            //
+            //
+            //read in book file and create book collection
+            //read in user file and create library users
+            //
+            //
+            //
+            //
+            //
+
             //initializing Library
             //temporary, create all books
             Book book1 = new Book("Twilight", "Stephenie Meyer", 2005, new List<string> { "YA", "Fantasy", "Romance" });
@@ -39,7 +52,7 @@ namespace LibraryApp
             User user2 = new User("beanieBaby", "Beanie", "Baby");
 
             //temporary, create LibraryUsers dictionary
-            LibraryUsers allUsers = new LibraryUsers
+            _allUsers = new LibraryUsers
                 (
                     new Dictionary<string, User>
                     {
@@ -53,19 +66,34 @@ namespace LibraryApp
         {
             while (true)
             {
+                Console.Clear();
                 Intro();
                 _currentUser = LogIn();
                 _libraryMenus = new Menu(_currentUser, _libraryBooks);
-                bool continueLoop = _libraryMenus.LibraryMenu();
-                if (continueLoop)
+                bool continueProgramLoop = _libraryMenus.LibraryMenu();
+                if (continueProgramLoop)
                 {
-                    //true = log-in again
-                    //false = exit application
                     _currentUser = null;
+                    _libraryMenus = null;
                     continue;
                 }
+                else
+                {
+                    //FINISH THIS!!!!!
+                    //
+                    //
+                    //
+                    //
+                    //write out book collection to book file
+                    //write out library users to user file
+                    //
+                    //
+                    //
+                    //
+                    //
 
-                break;
+                    break;
+                }
             }
             
         }

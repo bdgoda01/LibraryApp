@@ -12,6 +12,8 @@ namespace LibraryApp
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
 
+        public string FullName { get; private set; }
+
         private string _userInput;
 
         public User(string userName, string firstName, string lastName)
@@ -19,6 +21,7 @@ namespace LibraryApp
             UserName = userName;
             FirstName = firstName;
             LastName = lastName;
+            FullName = firstName + " " + lastName;
         }
 
         public User(string userName)
@@ -41,9 +44,6 @@ namespace LibraryApp
                     Console.Write("\nFirst Name: ");
                     _userInput = Console.ReadLine();
 
-                    //validate userInput
-                    //maybe can create a separate validation class?
-                    //eventually add conditions to prohibit numbers or special characters
                     if (String.IsNullOrEmpty(_userInput))
                     {
                         Console.WriteLine("\nFirst Name cannot be empty. Please enter a valid First Name.\n\n");
@@ -89,12 +89,12 @@ namespace LibraryApp
                     LibraryStatic.ShortPause();
                     continue;
                 }
+                
+                FullName = FirstName + " " + LastName;
+
                 break;
                 
             }
-           
-            //idea: user should also be able to check out/return books, have a record of all books currently checked out (with a due date)
-            //maybe separate class called UserAccount ??
 
         }
     }

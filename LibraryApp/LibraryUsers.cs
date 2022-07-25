@@ -11,9 +11,6 @@ namespace LibraryApp
         //dictionary of all library users
         private readonly Dictionary<string, User> _libraryUsers = new();
 
-        //list of usernames of all library users
-        private List<string> _userNames => new List<string>(_libraryUsers.Keys);
-
         public LibraryUsers(Dictionary<string, User> libraryUsers)
         {
             _libraryUsers = libraryUsers;
@@ -27,11 +24,14 @@ namespace LibraryApp
                 Console.WriteLine("\nWelcome, {0} {1}! Logging you in...", currentUser.FirstName, currentUser.LastName);
                 LibraryStatic.MediumPause();
                 Console.WriteLine("Successfully logged in.");
+                Console.Write("Press enter to continue...");
+                Console.ReadLine();
                 return currentUser;
             }
             else
             {
                 User newUser = new User(username);
+                _libraryUsers.Add(username, newUser);
                 return newUser;
             }
         }

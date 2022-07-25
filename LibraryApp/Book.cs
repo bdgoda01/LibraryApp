@@ -29,11 +29,11 @@ namespace LibraryApp
             if (IsAvailable)
             {
                 Loanee = loaneeName;
-                Console.WriteLine("Thanks, {0}! You have sucessfully checked out this book.", loaneeName);
+                Console.WriteLine("\nThanks, {0}! You have sucessfully checked out this book.", loaneeName);
             }
             else
             {
-                Console.WriteLine("Sorry, this book has been checked out.");
+                Console.WriteLine("\nSorry, this book has been checked out.");
             }
         }
 
