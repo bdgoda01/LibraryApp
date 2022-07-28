@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace LibraryApp
 {
     public class Library
     {
+        private Dictionary<int, Book> _booksDatabase = new Dictionary<int, Book>();
         private BookCollection _libraryBooks;
         private LibraryUsers _allUsers;
         private User _currentUser;
@@ -15,43 +17,13 @@ namespace LibraryApp
         
         public Library()
         {
-            //FINISH THIS!!!!!
-            //
-            //
-            //
-            //
-            //read in book file and create book collection
-            //read in user file and create library users
-            //
-            //
-            //
-            //
-            //
+            InitializeLibraryBooks();
 
-            //initializing Library
-            //temporary, create all books
-            Book book1 = new Book("Twilight", "Stephenie Meyer", 2005, new List<string> { "YA", "Fantasy", "Romance" });
-            Book book2 = new Book("New Moon", "Stephenie Meyer", 2006, new List<string> { "YA", "Fantasy", "Romance" });
-            Book book3 = new Book("Eclipse", "Stephenie Meyer", 2007, new List<string> { "YA", "Fantasy", "Romance" });
-            Book book4 = new Book("Breaking Dawn", "Stephenie Meyer", 2008, new List<string> { "YA", "Fantasy", "Romance" });
+            _libraryBooks = new BookCollection(_booksDatabase);
 
-            //temporary, create bookCollection
-            _libraryBooks = new BookCollection
-                (
-                    new Dictionary<int, Book>
-                    {
-                        { 1, book1 },
-                        { 2, book2 },
-                        { 3, book3 },
-                        { 4, book4 }
-                    }
-                );
-
-            //temporary, create user
             User user1 = new User("libraryAdmin", "Library", "Admin");
             User user2 = new User("beanieBaby", "Beanie", "Baby");
 
-            //temporary, create LibraryUsers dictionary
             _allUsers = new LibraryUsers
                 (
                     new Dictionary<string, User>
@@ -60,6 +32,22 @@ namespace LibraryApp
                         { user2.UserName, user2 }
                     }
                 );
+        }
+
+        public void InitializeLibraryBooks()
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            DirectoryInfo directory = new DirectoryInfo(currentDirectory);
+            var fileName = Path.Combine(directory.FullName, "librarybooks.json");
+
+            var serializer = new JsonSerializer();
+
+            using (var reader = new StreamReader(fileName))
+            using (var jsonReader = new JsonTextReader(reader))
+            {
+                _booksDatabase = serializer.Deserialize<Dictionary<int, Book>>(jsonReader);
+            }
+
         }
 
         public void AppStart()
@@ -79,19 +67,6 @@ namespace LibraryApp
                 }
                 else
                 {
-                    //FINISH THIS!!!!!
-                    //
-                    //
-                    //
-                    //
-                    //write out book collection to book file
-                    //write out library users to user file
-                    //
-                    //
-                    //
-                    //
-                    //
-
                     break;
                 }
             }

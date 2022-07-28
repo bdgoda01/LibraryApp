@@ -1,0 +1,62 @@
+{
+  "1": {
+    "Title": "Monster",
+    "Author": "Walter Dean Myers",
+    "ReleaseYear": 1999,
+    "Genre": [ "Drama", "Crime Novel", "Mystery" ]
+  },
+  "2": {
+    "Title": "The Lightning Thief",
+    "Author": "Rick Riordan",
+    "ReleaseYear": 2005,
+    "Genre": [ "Fantasy", "Young Adult", "Mythology" ]
+  },
+  "3": {
+    "Title": "The Hunger Games",
+    "Author": "Suzanne Collins",
+    "ReleaseYear": 2008,
+    "Genre": [ "Young Adult", "Dystopia", "Romance" ]
+  },
+  "4": {
+    "Title": "The Giver",
+    "Author": "Lois Lowry",
+    "ReleaseYear": 1993,
+    "Genre": [ "Young Adult", "Classics", "Dystopia" ]
+  },
+  "5": {
+    "Title": "The Fault in Our Stars",
+    "Author": "John Green",
+    "ReleaseYear": 2012,
+    "Genre": [ "Young Adult", "Romance", "Coming of Age" ]
+  },
+  "6": {
+    "Title": "Divergent",
+    "Author": "Veronica Roth",
+    "ReleaseYear": 2011,
+    "Genre": [ "Dystopia", "Young Adult", "Adventure" ]
+  },
+  "7": {
+    "Title": "To Kill A Mockingbird",
+    "Author": "Harper Lee",
+    "ReleaseYear": 1960,
+    "Genre": [ "Classics", "Historical Fiction" ]
+  },
+  "8": {
+    "Title": "The Book Thief",
+    "Author": "Markus Zusak",
+    "ReleaseYear": 2006,
+    "Genre": [ "Historical Fiction", "Young Adult", "Classics" ]
+  },
+  "9": {
+    "Title": "The Perks of Being a Wallflower",
+    "Author": "Stephen Chbosky",
+    "ReleaseYear": 1999,
+    "Genre": [ "Young Adult", "Mental Health", "LGBT", "High School" ]
+  },
+  "10": {
+    "Title": "The Hobbit",
+    "Author": "J.R.R. Tolkien",
+    "ReleaseYear": 1937,
+    "Genre": [ "Fantasy", "Classics", "Adventure" ]
+  }
+}

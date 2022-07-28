@@ -8,7 +8,6 @@ namespace LibraryApp
 {
     public class LibraryUsers
     {
-        //dictionary of all library users
         private readonly Dictionary<string, User> _libraryUsers = new();
 
         public LibraryUsers(Dictionary<string, User> libraryUsers)
@@ -18,7 +17,6 @@ namespace LibraryApp
 
         public User UserExistsCheck(string username)
         {
-            //Check if a user exists in the current database
             if(_libraryUsers.TryGetValue(username, out User currentUser))
             {
                 Console.WriteLine("\nWelcome, {0} {1}! Logging you in...", currentUser.FirstName, currentUser.LastName);

@@ -27,7 +27,6 @@ namespace LibraryApp
         public User(string userName)
         {
             UserName = userName;
-            //method to set up new users
             NewUserSetUp();
         }
 
@@ -77,7 +76,6 @@ namespace LibraryApp
                     break;
                 }
 
-                //confirmation
                 Console.Clear();
                 Console.WriteLine("\nPlease confirm the following is correct.");
                 Console.WriteLine($"\nUsername: {UserName}\nFirst Name: {FirstName}\nLast Name: {LastName}");

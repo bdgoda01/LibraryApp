@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//need to add Browse Collection ability
-//need to add more Main Menu options
 namespace LibraryApp
 {
     public class Menu
@@ -243,7 +241,6 @@ namespace LibraryApp
                     }
 
                     continue;
-                    //should not reach this continue
                 }
                 else
                 {
